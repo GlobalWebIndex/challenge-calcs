@@ -19,18 +19,18 @@ The analysis include calculated metrics.
 ### Analyse gender in our universe
 Let say we have 5 respondents. Each respondent represent 100 people. From these 5 respondents are 3 women and 2 men. If we would want have simply analis which say us some metrics how many men and women we have at all (audience == universe == no filter expression) we should get these numbers:
 
-```
+```javascript
 {
-	option: male,
-    responses_count: 2,
-    weighted: 200,
-    percentage: 40
+  option: 'male',
+  responses_count: 2,
+  weighted: 200,
+  percentage: 40
 },
 {
-	option: female,
-    responses_count: 3,
-    weighted: 300,
-    percentage: 60
+  option: 'female',
+  responses_count: 3,
+  weighted: 300,
+  percentage: 60
 }
 ```
 By this we can say that 40% of our universe for analysis are male and the rest are women.
@@ -41,18 +41,18 @@ If we would say we want to make analysis over respondents which are using iPhone
 * calculate metrics for these respondents.
 
 So if we say from our sample are 2 women and 1 man using iPhone we should get these numbers for required audience.
-```
+```javascript
 {
-	option: male,
-    responses_count: 1,
-    weighted: 100,
-    percentage: 33.3%
+  option: 'male',
+  responses_count: 1,
+  weighted: 100,
+  percentage: 33.3
 },
 {
-	option: female,
-    responses_count: 2,
-    weighted: 200,
-    percentage: 66.7%
+  option: 'female',
+  responses_count: 2,
+  weighted: 200,
+  percentage: 66.7
 }
 ```
 From this numbers we can say that 33.3% of iPhone users are male and 77.7% are female.
