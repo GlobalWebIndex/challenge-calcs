@@ -1,0 +1,103 @@
+require 'spec_helper'
+require './lib/calculator'
+
+describe 'Calculations' do
+
+  # Questions
+  # gender: [male, female]
+  # age: [young, middle, old]
+  # colour: [red, blue]
+
+  # Audiences
+  let(:old_male_audience) { {and: [{gender: [:male]}, {age: [:old]}]} }
+  let(:red_likers_audience) { {and: [{colour: [:red]}]} }
+
+  let(:respondents) do
+    [ # id, wave, location, weighting, responses
+      { id: 'john', weighting: 1100, answers: { gender: [:male], age: [:young], colour: [:red] } },
+      { id: 'petr', weighting: 1100, answers: { gender: [:male], age: [:old], colour: [:red] } },
+      { id: 'steve', weighting: 1100, answers: { gender: [:male], age: [:old], colour: [:blue] } },
+      { id: 'rachel', weighting: 1000, answers: { gender: [:female], age: [:young], colour: [:blue] } },
+      { id: 'susan', weighting: 1000, answers: { gender: [:female], age: [:middle], colour: [:red] } },
+      { id: 'cate', weighting: 1000, answers: { gender: [:female], age: [:middle], colour: [:blue] } }
+    ]
+  end
+
+  def seed_respondents
+    respondents.each do |respondent|
+      EsHelpers.create_respondent(
+        id: respondent[:id],
+        weighting: respondent[:weighting],
+        answers: respondent[:answers]
+      )
+    end
+  end
+
+  before do
+    EsHelpers.create_index
+    seed_respondents
+  end
+
+  after do
+    EsHelpers.destroy_index
+  end
+
+  subject { Calculator.new(question: question, audience: audience).result }
+  let(:question) { nil }
+  let(:audience) { nil }
+
+  context "gender question" do
+    let(:question) { :gender }
+
+    it 'has correct responses count for male' do
+      # This is warming green test
+      expect(subject.detect{|o| o[:option] == 'male'}[:responses_count]).to eq(3)
+    end
+
+    it 'should return correct result' do
+      # male: john, peter, steve
+      # female: rachel, susan, cate
+      expect(subject).to match_array([
+        {
+          option: 'male',
+          responses_count: 3,
+          weighted: 3300,
+          percentage: 52.4
+        },
+        {
+          option: 'female',
+          responses_count: 3,
+          weighted: 3000,
+          percentage: 47.6
+        }
+      ])
+    end
+
+    context "with red likers audience" do
+      # red: john, peter, susan
+      #   male: john, peter
+      #   female: susan
+      it 'should return correct result' do
+        expect(subject).to match_array([
+          {
+            option: 'male',
+            responses_count: 2,
+            weighted: 2200,
+            percentage: 73.3
+          },
+          {
+            option: 'female',
+            responses_count: 1,
+            weighted: 1000,
+            percentage: 47.6
+          }
+        ])
+      end
+    end
+  end # gender question
+
+  context "colour question" do
+    context "with old male audience" do
+    end
+  end
+end
