@@ -83,13 +83,13 @@ describe 'Calculations' do
             option: 'male',
             responses_count: 2,
             weighted: 2200,
-            percentage: 73.3
+            percentage: 68.8
           },
           {
             option: 'female',
             responses_count: 1,
             weighted: 1000,
-            percentage: 47.6
+            percentage: 31.3
           }
         ])
       end
@@ -97,7 +97,9 @@ describe 'Calculations' do
   end # gender question
 
   context "colour question" do
+    # TODO: make test
     context "with old male audience" do
+      # TODO: make test
     end
   end
 end
