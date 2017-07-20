@@ -11,6 +11,7 @@ welcome to our calculation challenge. Our team is responsible for API which make
 
 ### Metrics
 The analysis include calculated metrics.
+
 * **percentage** - the ratio of respondents related to the data point in the audience. *The number is rounded to 1 decimal place*.
 * **responses_count** - the count of respondents related to the data point in audience
 * **weighted** - the sum of respondents weighting related to the data point in the audience.

@@ -2,5 +2,5 @@ require 'elasticsearch'
 
 module ES
   INDEX = :survey
-  Client = Elasticsearch::Client.new host: ENV['ELASTICSEARCH_URL']
+  Client = Elasticsearch::Client.new host: ENV['ELASTIC_URL']
 end
