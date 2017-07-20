@@ -55,8 +55,33 @@ So if we say from our sample are 2 women and 1 man using iPhone we should get th
   percentage: 66.7
 }
 ```
-From this numbers we can say that 33.3% of iPhone users are male and 77.7% are female.
+From this numbers we can say that 33.3% of iPhone users are male and 66.7% are female.
 
-# How to start
+## Good to know
+* ruby
+* elasticsearch
+* docker (in case you don't have ruby and elasticsearch installed on local)
+
+## How to start
+The challenge has 2 parts:
+* Implement missing tests cases [here](https://github.com/GlobalWebIndex/challenge-calcs/blob/master/spec/calc_spec.rb#L99-L104).
+* Implement missing logic in models, which makes tests green. One test is green which indicate some basic logic is working. Missing logic is:
+  * calculate `weighted` and `percentage` metrics (hint: one more sum aggregation and common formula for percentage)
+  * apply audience expression for make calculations only over specific sample (hint: filter)
+
+For run tests you can use docker compose by executing `docker-compose run challenge`. If you don't want use docker and use `rspec` directly
+please run it with `ELASTIC_URL` env variable set to your local elasticsearch instance.
+
+If you are interested in applying for this position or just want to challenge yourself (which is also 100% OK for us) please continue in following steps:
+
+* Fork this repository under your GitHub account.
+* Complete implementation inside your fork.
+* Open pull request to original repository with your own implementation which makes tests green. Also please feel free to design another structure on models or methods
+level. The current logic is only scratch for push off.
+* Comment your pull request with message containing READY or RDY to let us know that we can review your code.
+* Comment your PR with any question in case you will need any help (or send us email - see bellow).
+
+***__You can also open pull request before you're finished with implementation in case you are willing to discuss anything!__
+
 # Contacts
-In case you want to apply for position in our team please contact petr@globalwebindex.net. If you have any questions about implementation itself you can send mail to zdenko@globalwebindex.net or roman@globalwebindex.net. Also you can open an issue/PR in this repository so we can discuss any part together.
+In case you want to apply for position in our team please contact `petr@globalwebindex.net`. If you have any questions about implementation itself you can send mail to `zdenko@globalwebindex.net` or `roman@globalwebindex.net`. Also you can open an issue/PR in this repository so we can discuss any part together.
