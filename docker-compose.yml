@@ -1,0 +1,19 @@
+version: '2.0'
+services:
+  challenge:
+    build: .
+    command: 
+    environment:
+      - ELASTIC_URL=http://elasticsearch:9200
+    links:
+      - elasticsearch
+    depends_on:
+      - elasticsearch
+    command: sh -c './wait-for elasticsearch:9200 -- rspec'
+
+  elasticsearch:
+    image: elasticsearch:2.3.5
+    environment: ['http.host=0.0.0.0', 'transport.host=127.0.0.1']
+    restart: always
+    ports:
+      - 9200:9200
