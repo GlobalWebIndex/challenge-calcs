@@ -9,16 +9,16 @@ describe 'Calculations' do
   # colour: [red, blue]
 
   # Audiences
-  let(:old_male_audience) { {and: [{gender: [:male]}, {age: [:old]}]} }
   let(:red_likers_audience) { {and: [{colour: [:red]}]} }
+  let(:female_or_not_old_audience) { {or: [{gender: [:female]}, {age: [:young, :middle]}]} }
 
   let(:respondents) do
-    [ # id, wave, location, weighting, responses
+    [
       { id: 'john', weighting: 1100, answers: { gender: [:male], age: [:young], colour: [:red] } },
       { id: 'petr', weighting: 1100, answers: { gender: [:male], age: [:old], colour: [:red] } },
-      { id: 'steve', weighting: 1100, answers: { gender: [:male], age: [:old], colour: [:blue] } },
+      { id: 'steve', weighting: 1100, answers: { gender: [:male], age: [:middle], colour: [:blue] } },
       { id: 'rachel', weighting: 1000, answers: { gender: [:female], age: [:young], colour: [:blue] } },
-      { id: 'susan', weighting: 1000, answers: { gender: [:female], age: [:middle], colour: [:red] } },
+      { id: 'susan', weighting: 1000, answers: { gender: [:female], age: [:old], colour: [:red] } },
       { id: 'cate', weighting: 1000, answers: { gender: [:female], age: [:middle], colour: [:blue] } }
     ]
   end
@@ -52,18 +52,20 @@ describe 'Calculations' do
           option: 'male',
           responses_count: 3,
           weighted: 3300,
-          percentage: 52.4
+          percentage: 52.38
         },
         {
           option: 'female',
           responses_count: 3,
           weighted: 3000,
-          percentage: 47.6
+          percentage: 47.62
         }
       ])
     end
 
     context "with red likers audience" do
+      let(:audience) { red_likers_audience }
+
       # red: john, peter, susan
       #   male: john, peter
       #   female: susan
@@ -73,13 +75,13 @@ describe 'Calculations' do
             option: 'male',
             responses_count: 2,
             weighted: 2200,
-            percentage: 68.8
+            percentage: 68.75
           },
           {
             option: 'female',
             responses_count: 1,
             weighted: 1000,
-            percentage: 31.3
+            percentage: 31.25
           }
         ])
       end
@@ -87,8 +89,13 @@ describe 'Calculations' do
   end # gender question
 
   context "colour question" do
+    let(:question) { :colour }
+
     # TODO: make test
-    context "with old male audience" do
+
+    context "with female or not old audience" do
+      let(:audience) { female_or_not_old_audience }
+
       # TODO: make test
     end
   end
