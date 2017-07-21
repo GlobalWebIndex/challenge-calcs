@@ -23,19 +23,9 @@ describe 'Calculations' do
     ]
   end
 
-  def seed_respondents
-    respondents.each do |respondent|
-      EsHelpers.create_respondent(
-        id: respondent[:id],
-        weighting: respondent[:weighting],
-        answers: respondent[:answers]
-      )
-    end
-  end
-
   before do
     EsHelpers.create_index
-    seed_respondents
+    EsHelpers.seed_respondents(respondents)
   end
 
   after do
