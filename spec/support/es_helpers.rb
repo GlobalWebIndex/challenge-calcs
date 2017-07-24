@@ -32,6 +32,16 @@ module EsHelpers
         body: body
       )
     end
+
+    def seed_respondents(respondents)
+      respondents.each do |respondent|
+        create_respondent(
+          id: respondent[:id],
+          weighting: respondent[:weighting],
+          answers: respondent[:answers]
+        )
+      end
+    end
   end
 
   extend ClassMethods
