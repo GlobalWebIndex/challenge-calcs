@@ -6,7 +6,7 @@ welcome to our calculation challenge. Our team is responsible for API which make
 ## Vocabulary
 * **respondent** - A single user who has answered a set of questions in our surveys.
 * **question** - A question which respondent is asked in our surveys (eg. How old are you? How many children do you have? ...)
-* **option** - Each question has many options to answer. For instance question `What is your gender` will have 2 options `Male` and `Female`. Sometimes we also refer options as **datapoints**.
+* **option** - Each question has many options to answer. For instance question `What is your gender` will have 2 options `Male` and `Female`.
 * **universe** - All respondents who took our survey.
 * **audience** - Think about it as it's a sample of respondents over which the analysis is made. The audience can have some characteristic. Let's say that from all respondents (universe) you're interested only in young users which are using iPhone. This characteristic is represented by logical JSON expression `{and: [{age: [:young]}, {phone: [:iphone]}]` which is used to filter respondents we want for our analysis. Even universe can be audience - you just don't apply any expression which filters respondents.
 * **weighting** - Because we can't ask everybody on planet, each respondent is given some weight cause in our surveys he represents some subset of population with same demographic characteristics.
@@ -14,9 +14,9 @@ welcome to our calculation challenge. Our team is responsible for API which make
 ### Metrics
 The analysis include calculated metrics.
 
-* **percentage** - the ratio of respondents related to the datapoint in the audience. *The number is rounded to 2 decimal places*.
-* **responses_count** - the count of respondents related to the datapoint in the audience
-* **weighted** - the sum of respondents weighting related to the datapoint in the audience.
+* **percentage** - the ratio of respondents related to the option in the audience. *The number is rounded to 2 decimal places*.
+* **responses_count** - the count of respondents related to the option in the audience
+* **weighted** - the sum of respondents weighting related to the option in the audience.
 
 ## Examples
 ### 1. Analyze gender in our universe
