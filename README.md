@@ -1,7 +1,7 @@
 # Challenge: Calculations
 
 Hey folks,
-welcome to our calculation challenge. Our team is responsible for API which makes various types of calculations over data. In our challenge data are represented by respondents. Each respondent answered on options of questions. Based on their answers we're able to profile them into groups (audiences) with same or similar characteristics and make a basic analysis.
+welcome to our calculation challenge. Our team is responsible for the API which makes various types of calculations over the GWI dataset. In our challenge, data are represented by respondents. A respondent answers each question by selecting one or more options. (e.g. Selecting ‘Female’ when asked ‘what gender are you?’ or selecting ‘music’, ‘gaming’ and ‘cooking’ when asked ‘What are your interests?’. Each respondent is given a weighting so all respondents together represent the total internet population of a country. Based on the responses we can answer basic questions like “How many respondents are female?”  but we are able to combine data points together and profile them into groups (audiences) with same or similar characteristics and make a basic analysis. (e.g. we may make an audience of those interested in gaming or music then ask more complex questions like “How many women are interested in gaming or music?”)
 
 ## Vocabulary
 * **respondent** - A single user who has answered a set of questions in our surveys.
@@ -9,7 +9,7 @@ welcome to our calculation challenge. Our team is responsible for API which make
 * **option** - Each question has many options to answer. For instance question `What is your gender` will have 2 options `Male` and `Female`.
 * **universe** - All respondents who took our survey.
 * **audience** - Think about it as it's a sample of respondents over which the analysis is made. The audience can have some characteristic. Let's say that from all respondents (universe) you're interested only in young users which are using iPhone. This characteristic is represented by logical JSON expression `{and: [{age: [:young]}, {phone: [:iphone]}]` which is used to filter respondents we want for our analysis. Even universe can be audience - you just don't apply any expression which filters respondents.
-* **weighting** - Because we can't ask everybody on planet, each respondent is given some weight cause in our surveys he represents some subset of population with same demographic characteristics.
+* **weighting** - Because we can't ask everybody on planet, each respondent is given some weighting (e.g. they represent 1,000 people) in our data set so when all respondents are combined their weighting sums to the total internet populations and is representative across demographic characteristics.
 
 ### Metrics
 The analysis include calculated metrics.
@@ -86,7 +86,7 @@ So if we say from our sample 2 women and 1 man (with same weightings) are using 
   percentage: 66.67
 }
 ```
-From these numbers we can say that 33.3% of iPhone users are male and 66.7% are female.
+From these numbers, we can say that 33.3% of iPhone users are male and 66.7% are female.
 
 #### 2.1. Different weightings again
 How would different weightings affect previous analysis? Let's use same weightings from second example (140 for each man, 100 for each woman).
@@ -145,7 +145,7 @@ We'll be again using different weightings per gender from example 1.1. We need t
 }
 ```
 
-We can say that iPhone uses 50% of men and 66.67% of women.
+We can say that 50% of men and 66.67% of women uses an iPhone.
 
 ## Good to know
 * ruby
@@ -154,8 +154,8 @@ We can say that iPhone uses 50% of men and 66.67% of women.
 
 ## How to start
 The challenge has 2 parts:
-* Implement missing tests cases [here](https://github.com/GlobalWebIndex/challenge-calcs/blob/master/spec/calc_spec.rb#L99-L104).
-* Implement missing logic in models, which makes tests green. One test is green which indicate some basic logic is working. Missing logic is:
+* Implement the missing tests cases [here](https://github.com/GlobalWebIndex/challenge-calcs/blob/master/spec/calc_spec.rb#L99-L104).
+* Implement the missing logic in models, which makes tests green. One test is green, which indicate some basic logic is working. Missing logic is:
   * calculate `weighted` and `percentage` metrics (hint: one more sum aggregation and common formula for percentage)
   * apply audience expression to make calculations only over specific sample (hint: you need to filter respondents)
 
@@ -168,10 +168,10 @@ If you are interested in applying for this position or just want to challenge yo
 * Complete implementation inside your repo and invite us for review (GH user names: `zdenal`, `romansklenar`).
 * Open pull request in your repository with your own implementation which makes tests green. Also please feel free to design another structure on class or methods
 level. The current logic is only scratch for push off.
-* Comment your pull request with message letting us know that we can review your code.
-* Comment your PR with any question in case you will need any help (or send us email - see bellow).
+* Comment your pull request with a message letting us know that we can review your code.
+* Comment your PR with questions in case you need any help (or send us email - see bellow).
 
 ***__You can also open pull request before you're finished with implementation in case you are willing to discuss anything!__***
 
 # Contacts
-In case you want to apply for the position in our team please contact `petr@globalwebindex.net`. If you have any questions about implementation itself you can send mail to `zdenko@globalwebindex.net` or `roman@globalwebindex.net`. Also you can open an issue/PR in this repository so we can discuss any part together.
+If you would like to apply for the position in our team, please contact `petr@globalwebindex.net`. If you have any questions about implementation itself, you can send mail to `zdenko@globalwebindex.net` or `roman@globalwebindex.net`. Also you can open an issue/PR in this repository so we can discuss any part together.
