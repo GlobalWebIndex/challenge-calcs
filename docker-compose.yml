@@ -14,7 +14,8 @@ services:
 
   elasticsearch:
     image: elasticsearch:2.3.5
-    environment: ['http.host=0.0.0.0', 'transport.host=127.0.0.1']
+    environment:
+      - http.host=0.0.0.0
     restart: always
     ports:
-      - 9200:9200
+      - 9200
