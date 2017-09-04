@@ -9,8 +9,8 @@ describe 'Calculations' do
   # colour: [red, blue]
 
   # Audiences
-  let(:red_likers_audience) { {and: [{colour: [:red]}]} }
-  let(:female_or_not_old_audience) { {or: [{gender: [:female]}, {age: [:young, :middle]}]} }
+  let(:red_likers_audience) { {must: [{colour: [:red]}]} }
+  let(:female_or_not_old_audience) { {should: [{gender: [:female]}, {age: [:young, :middle]}]} }
 
   let(:respondents) do
     [
