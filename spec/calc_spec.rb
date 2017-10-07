@@ -1,3 +1,4 @@
+# Feel free to add some new tests. The structure of models are given and required as it is.
 require 'spec_helper'
 require './lib/calculator'
 
@@ -95,6 +96,13 @@ describe 'Calculations' do
 
     context "with female or not old audience" do
       let(:audience) { female_or_not_old_audience }
+
+      # TODO: make test
+    end
+
+    context "with female || (red && old) audience" do
+      let(:female_or_red_and_old_audience) { } # TODO: create an audience
+      let(:audience) { female_or_red_and_old_audience }
 
       # TODO: make test
     end
