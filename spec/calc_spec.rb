@@ -12,6 +12,7 @@ describe 'Calculations' do
   # Audiences
   let(:red_likers_audience) { {and: [{colour: [:red]}]} }
   let(:female_or_not_old_audience) { {or: [{gender: [:female]}, {age: [:young, :middle]}]} }
+  let(:red_and_blue_audience) { {and: [{colour: [:red]}, {colour: [:blue]}]} }
 
   let(:respondents) do
     [
@@ -86,7 +87,28 @@ describe 'Calculations' do
           }
         ])
       end
-    end
+    end # with red likers audience
+
+    context "with red and blue likers audience" do
+      let(:audience) { red_and_blue_audience }
+
+      it 'should return correct result' do
+        expect(subject).to match_array([
+          {
+            option: 'male',
+            responses_count: 0,
+            weighted: 0,
+            percentage: 0
+          },
+          {
+            option: 'female',
+            responses_count: 0,
+            weighted: 0,
+            percentage: 0
+          }
+        ])
+      end
+    end # with red and blue likers audience
   end # gender question
 
   context "colour question" do
