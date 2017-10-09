@@ -124,7 +124,7 @@ describe 'Calculations' do
 
     context "with female || (red && old) audience" do
       let(:female_or_red_old_audience) { } # TODO: create an audience
-      let(:audience) { female_or_red_and_old_audience }
+      let(:audience) { female_or_red_old_audience }
 
       # TODO: make test
     end
