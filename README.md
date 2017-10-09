@@ -18,6 +18,20 @@ The analysis include calculated metrics.
 * **responses_count** - the count of respondents related to the option in the audience
 * **weighted** - the sum of respondents weighting related to the option in the audience.
 
+### Audience expression
+Audience expression is used as filter for respondent sample. By this expression we are describing the sample over which we are making calculations. As we can see
+in test the expression has JSON format. So for example expression like this: `{and: [{gender: [:male]}, {age: [:young]}]}` are saying we are interested in **Young men** sample/audince.
+
+Also the expression could be nested (doesn't need to be only one level `and` or `or` array in JSON). The expression could looks like:
+`{and: [{question1: [code1]}, {or: [{question2: [code2]}, {question3: [code3, code4]}]}]}`. The grammar below is describing structure.
+
+```
+E -> AND | OR | q
+AND -> { and: Array<E> }
+OR -> { or: Array<E> }
+q -> { question_code: Array<question_option> }
+```
+
 ## Examples
 ### 1. Analyze gender in our universe
 Let say we have 5 respondents we asked in our survey. Each respondent represents 100 people which is his weighting. From these 5 respondents there are 3 women and 2 men.
