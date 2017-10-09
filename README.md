@@ -22,7 +22,7 @@ The analysis include calculated metrics.
 Audience expression is used as filter for respondent sample. By this expression we are describing the sample over which we are making calculations. As we can see
 in test the expression has JSON format. So for example expression like this: `{and: [{gender: [:male]}, {age: [:young]}]}` are saying we are interested in **Young men** sample/audince.
 
-Also the expression could be nested (doesn't need to be only one level `and` or `or` array in JSON). The expression could looks like:
+Also the expression could be nested (doesn't need to be only one level `and` or `or` array in JSON). The expression could look like this:
 `{and: [{question1: [option1]}, {or: [{question2: [option2]}, {question3: [option3, option4]}]}]}`. The grammar below is describing the structure.
 
 ```
