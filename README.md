@@ -18,9 +18,24 @@ The analysis include calculated metrics.
 * **responses_count** - the count of respondents related to the option in the audience
 * **weighted** - the sum of respondents weighting related to the option in the audience.
 
+### Audience expression
+Audience expression is used as filter for respondent sample. By this expression we are describing the sample over which we are making calculations. As we can see
+in test the expression has JSON format. So for example expression like this: `{and: [{gender: [:male]}, {age: [:young]}]}` are saying we are interested in **Young men** sample/audince.
+
+Also the expression could be nested (doesn't need to be only one level `and` or `or` array in JSON). The expression could look like this:
+`{and: [{question1: [option1]}, {or: [{question2: [option2]}, {question3: [option3, option4]}]}]}`. The grammar below is describing the structure.
+
+```
+E -> AND | OR | q
+AND -> { and: Array<E> }
+OR -> { or: Array<E> }
+q -> { question_code: Array<question_option> }
+```
+
 ## Examples
 ### 1. Analyze gender in our universe
-Let say we have 5 respondents we asked in our survey. Each respondent represents 100 people which is his weighting. From these 5 respondents there are 3 women and 2 men. If we would want to have simple analysis which tell us how many men and women we have at all (audience == universe == no filter expression) we should get these numbers:
+Let say we have 5 respondents we asked in our survey. Each respondent represents 100 people which is his weighting. From these 5 respondents there are 3 women and 2 men.
+If we would want to have simple analysis which tell us how many men and women we have at all (audience == universe == no filter expression) we should get these numbers:
 
 ```javascript
 // audience: universe, question: gender
@@ -61,7 +76,8 @@ What would happen if we'd say that each of our male respondent will have a bigge
 }
 ```
 
-Now we can say that our 2 men represents 280 men in population and our 3 women represents 300 women in the population of 580 people. This in other words means that 48.28% of our universe for analysis are men and the rest are women which is much closer to 50:50 gender ratio in actual world population.
+Now we can say that our 2 men represents 280 men in population and our 3 women represents 300 women in the population of 580 people.
+This in other words means that 48.28% of our universe for analysis are men and the rest are women which is much closer to 50:50 gender ratio in actual world population.
 You can see that by using a little adjustment in weightings can get closer to reality and get more accurate results.
 
 ### 2. Analyze gender for iPhone users
@@ -88,28 +104,9 @@ So if we say from our sample 2 women and 1 man (with same weightings) are using 
 ```
 From these numbers, we can say that 33.3% of iPhone users are male and 66.7% are female.
 
-#### 2.1. Different weightings again
-How would different weightings affect previous analysis? Let's use same weightings from second example (140 for each man, 100 for each woman).
-
-```javascript
-// audience: iPhone users, question: gender
-{
-  option: 'male',
-  responses_count: 1,
-  weighted: 140,
-  percentage: 41.18
-},
-{
-  option: 'female',
-  responses_count: 2,
-  weighted: 200,
-  percentage: 58.82
-}
-```
-Now we can say that 41.18% of iPhone users are male and 58.82% are female.
-
 ### 3. Analyzing different audiences
-What would be percentage of men who are using iPhone and what would be percentage of women using iPhone? Consider that those people who didn't answered iPhone they answered Samsung. How could we run these kind of analysis?
+What would be percentage of men who are using iPhone and what would be percentage of women using iPhone? Consider that those people who didn't answered iPhone they answered Samsung.
+How could we run these kind of analysis?
 
 We'll be again using different weightings per gender from example 1.1. We need to create two audiences - male and female.
 
@@ -156,8 +153,8 @@ We can say that 50% of men and 66.67% of women uses an iPhone.
 The challenge has 2 parts:
 * Implement the missing tests cases [here](https://github.com/GlobalWebIndex/challenge-calcs/blob/master/spec/calc_spec.rb#L99-L104).
 * Implement the missing logic in models, which makes tests green. One test is green, which indicate some basic logic is working. Missing logic is:
-  * calculate `weighted` and `percentage` metrics (hint: one more sum aggregation and common formula for percentage)
-  * apply audience expression to make calculations only over specific sample (hint: you need to filter respondents)
+  * calculate `weighted` and `percentage` metrics
+  * apply audience expression to make calculations only over specific sample
 
 To run tests you can use docker compose by executing `docker-compose run challenge`. If you don't want use docker and use `rspec` directly
 please run it with `ELASTIC_URL` env variable set to your local elasticsearch instance.
