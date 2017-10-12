@@ -52,14 +52,14 @@ describe 'Terms' do
       expect(subject).to eq({
         bool: {
           should: [
-            terms: {
-              gender: [:male]
-            },
-            bool: {
-              must: [
-                {terms: {colour: [:red]}},
-                {terms: {colour: [:blue]}}
-              ]
+            {terms: {gender: [:male]}},
+            {
+              bool: {
+                must: [
+                  {terms: {colour: [:red]}},
+                  {terms: {colour: [:blue]}}
+                ]
+              }
             }
           ]
         }
