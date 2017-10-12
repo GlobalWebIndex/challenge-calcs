@@ -13,12 +13,14 @@ describe 'Terms' do
     let(:audience) { {must: {gender: [:male]}} }
 
     it 'should return correct result' do
-      expect(subject).to include({
-        must: [
-          terms: {
-            gender: [:male]
-          }
-        ]
+      expect(subject).to eq({
+        bool: {
+          must: [
+            terms: {
+              gender: [:male]
+            }
+          ]
+        }
       })
     end
   end
@@ -27,11 +29,40 @@ describe 'Terms' do
     let(:audience) { {must: [{colour: [:red]}, {colour: [:blue]}]} }
 
     it 'should return correct result' do
-      expect(subject).to include({
-        must: [
-          {terms: {colour: [:red]}},
-          {terms: {colour: [:blue]}}
-        ]
+      expect(subject).to eq({
+        bool: {
+          must: [
+            {terms: {colour: [:red]}},
+            {terms: {colour: [:blue]}}
+          ]
+        }
+      })
+    end
+  end
+
+  describe 'inherited terms' do
+    let(:audience) { {
+      should: [
+        {gender: [:male]},
+        {must: [{colour: [:red]}, {colour: [:blue]}]}
+      ]
+    } }
+
+    it 'should return correct result' do
+      expect(subject).to eq({
+        bool: {
+          should: [
+            terms: {
+              gender: [:male]
+            },
+            bool: {
+              must: [
+                {terms: {colour: [:red]}},
+                {terms: {colour: [:blue]}}
+              ]
+            }
+          ]
+        }
       })
     end
   end
