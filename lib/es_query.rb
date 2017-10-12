@@ -34,7 +34,10 @@ class EsQuery
 
   def set_options(request)
     request[:aggs][:options] = {
-      terms: { field: @question },
+      terms: {
+        field: @question,
+        min_doc_count: 0
+      },
       aggs: {
         weighted: {
           sum: { field: :weighting }
