@@ -1,4 +1,5 @@
 require 'es'
+require 'term_builder'
 
 class EsQuery
   def initialize(question:, audience: {})
@@ -28,6 +29,9 @@ class EsQuery
   def set_universe(request, audience)
     if hash_present?(audience)
       # TODO: need to be implemented
+      request[:query] = {
+        bool: TermsBuilder.new(audience).to_query
+      }
     else
       request[:aggs][:weighted_universe] = {
         sum: { field: :weighting }
