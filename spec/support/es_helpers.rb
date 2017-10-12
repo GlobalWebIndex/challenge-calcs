@@ -10,7 +10,24 @@ module EsHelpers
       ES::Client.indices.create(
         index: ES::INDEX,
         body: {
-          mappings: {},
+          mappings: {
+            respondent: {
+              properties: {
+                gender: {
+                  type: "text",
+                  fielddata: true
+                },
+                colour: {
+                  type: "text",
+                  fielddata: true
+                },
+                age: {
+                  type: "text",
+                  fielddata: true
+                }
+              }
+            }
+          },
           settings: {
             index: {
               number_of_shards: 1,

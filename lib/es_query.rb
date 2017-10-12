@@ -1,4 +1,5 @@
 require 'es'
+require 'term_builder'
 
 class EsQuery
   def initialize(question:, audience: {})
@@ -17,36 +18,36 @@ class EsQuery
     }
 
     set_audience(request) if hash_present?(@audience)
-    set_universe(request, @audience)
-    set_options(request, @question, @audience)
+    set_universe(request)
+    set_options(request)
 
     request
   end
 
   private
 
-  def set_universe(request, audience)
-    if hash_present?(audience)
-      # TODO: need to be implemented
-    else
-      request[:aggs][:weighted_universe] = {
-        sum: { field: :weighting }
-      }
-    end
+  def set_universe(request)
+    request[:aggs][:weighted_universe] = {
+      sum: { field: :weighting }
+    }
   end
 
-  def set_options(request, question, audience)
-    if hash_present?(audience)
-      # TODO: need to be implemented
-    else
-      request[:aggs][:options] = {
-        terms: { field: question }
+  def set_options(request)
+    request[:aggs][:options] = {
+      terms: {
+        field: @question,
+        min_doc_count: 0
+      },
+      aggs: {
+        weighted: {
+          sum: { field: :weighting }
+        }
       }
-    end
+    }
   end
 
   def set_audience(request)
-    # TODO: need to be implemented
+    request[:query] = TermsBuilder.new(@audience).to_query
   end
 
   def hash_present?(hash)
