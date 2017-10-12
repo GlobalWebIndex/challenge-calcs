@@ -114,19 +114,69 @@ describe 'Calculations' do
   context "colour question" do
     let(:question) { :colour }
 
-    # TODO: make test
+    it 'should return correct result' do
+      expect(subject).to match_array([
+        {
+          option: 'blue',
+          responses_count: 3,
+          weighted: 3100,
+          percentage: 49.21
+        },
+        {
+          option: 'red',
+          responses_count: 3,
+          weighted: 3200,
+          percentage: 50.79
+        }
+      ])
+    end
 
     context "with female or not old audience" do
       let(:audience) { female_or_not_old_audience }
 
-      # TODO: make test
+      it 'should return correct result' do
+        expect(subject).to match_array([
+          {
+            option: 'blue',
+            responses_count: 3,
+            weighted: 3100,
+            percentage: 59.62
+          },
+          {
+            option: 'red',
+            responses_count: 2,
+            weighted: 2100,
+            percentage: 40.38
+          }
+        ])
+      end
     end
 
     context "with female || (red && old) audience" do
-      let(:female_or_red_old_audience) { } # TODO: create an audience
+      let(:female_or_red_old_audience) { {
+        should: [
+          {gender: [:female]},
+          {must: [{colour: [:red]}, {age: [:old]}]}
+        ]
+      } }
       let(:audience) { female_or_red_old_audience }
 
-      # TODO: make test
+      it 'should return correct result' do
+        expect(subject).to match_array([
+          {
+            option: 'blue',
+            responses_count: 2,
+            weighted: 2000,
+            percentage: 48.78
+          },
+          {
+            option: 'red',
+            responses_count: 2,
+            weighted: 2100,
+            percentage: 51.22
+          }
+        ])
+      end
     end
   end
 end
