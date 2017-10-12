@@ -23,7 +23,8 @@ class Calculator
   def calc_option(option_result, universe)
     {
       option: option_result['key'],
-      responses_count: option_result['doc_count']
+      responses_count: option_result['doc_count'],
+      weighted: option_result['weighted']['value']
     }
   end
 end
