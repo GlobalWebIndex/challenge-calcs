@@ -12,7 +12,7 @@ class TermsBuilder
   private
 
   def to_term(value)
-    if value.kind_of?(Array)
+    if value.is_a?(Array)
       value.map { |v| {terms: v}}
     else
       to_term([value])
