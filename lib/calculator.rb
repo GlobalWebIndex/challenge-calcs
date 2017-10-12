@@ -26,7 +26,7 @@ class Calculator
       option: option_result['key'],
       responses_count: option_result['doc_count'],
       weighted: weighted.to_i,
-      percentage: (weighted / universe * 100).round(2)
+      percentage: universe == 0.0 ? 0 : (weighted / universe * 100).round(2)
     }
   end
 end
