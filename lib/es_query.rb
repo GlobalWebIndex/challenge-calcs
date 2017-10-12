@@ -47,9 +47,7 @@ class EsQuery
   end
 
   def set_audience(request)
-    request[:query] = {
-      bool: TermsBuilder.new(@audience).to_query
-    }
+    request[:query] = TermsBuilder.new(@audience).to_query
   end
 
   def hash_present?(hash)
