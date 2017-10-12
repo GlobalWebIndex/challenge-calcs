@@ -8,7 +8,7 @@ welcome to our calculation challenge. Our team is responsible for the API which 
 * **question** - A question which respondent is asked in our surveys (eg. How old are you? How many children do you have? ...)
 * **option** - Each question has many options to answer. For instance question `What is your gender` will have 2 options `Male` and `Female`.
 * **universe** - All respondents who took our survey.
-* **audience** - Think about it as it's a sample of respondents over which the analysis is made. The audience can have some characteristic. Let's say that from all respondents (universe) you're interested only in young users which are using iPhone. This characteristic is represented by logical JSON expression `{and: [{age: [:young]}, {phone: [:iphone]}]` which is used to filter respondents we want for our analysis. Even universe can be audience - you just don't apply any expression which filters respondents.
+* **audience** - Think about it as it's a sample of respondents over which the analysis is made. The audience can have some characteristic. Let's say that from all respondents (universe) you're interested only in young users which are using iPhone. This characteristic is represented by logical JSON expression `{must: [{age: [:young]}, {phone: [:iphone]}]` which is used to filter respondents we want for our analysis. Even universe can be audience - you just don't apply any expression which filters respondents.
 * **weighting** - Because we can't ask everybody on planet, each respondent is given some weighting (e.g. they represent 1,000 people) in our data set so when all respondents are combined their weighting sums to the total internet populations and is representative across demographic characteristics.
 
 ### Metrics
@@ -20,15 +20,15 @@ The analysis include calculated metrics.
 
 ### Audience expression
 Audience expression is used as filter for respondent sample. By this expression we are describing the sample over which we are making calculations. As we can see
-in test the expression has JSON format. So for example expression like this: `{and: [{gender: [:male]}, {age: [:young]}]}` are saying we are interested in **Young men** sample/audince.
+in test the expression has JSON format. So for example expression like this: `{must: [{gender: [:male]}, {age: [:young]}]}` are saying we are interested in **Young men** sample/audince.
 
 Also the expression could be nested (doesn't need to be only one level `and` or `or` array in JSON). The expression could look like this:
-`{and: [{question1: [option1]}, {or: [{question2: [option2]}, {question3: [option3, option4]}]}]}`. The grammar below is describing the structure.
+`{must: [{question1: [option1]}, {should: [{question2: [option2]}, {question3: [option3, option4]}]}]}`. The grammar below is describing the structure.
 
 ```
 E -> AND | OR | q
-AND -> { and: Array<E> }
-OR -> { or: Array<E> }
+AND -> { must: Array<E> }
+OR -> { should: Array<E> }
 q -> { question_code: Array<question_option> }
 ```
 
