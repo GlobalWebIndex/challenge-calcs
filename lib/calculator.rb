@@ -8,7 +8,7 @@ class Calculator
     puts
     puts
     query = EsQueryMaker.new(question: question, audience: audience).make
-    puts "query %s" % [query[:aggs]]
+    puts "query %s" % [query]
     es_result = ES::Client.search(index: ES::INDEX, type: :respondent, body: query)
 
     universe = es_result['aggregations']['weighted_universe']['value']
