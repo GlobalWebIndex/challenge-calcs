@@ -164,7 +164,7 @@ We can say that 50% of men and 66.67% of women uses an iPhone.
 
 The challenge has 2 parts:
 
-* Implement the missing tests cases [here](https://github.com/GlobalWebIndex/challenge-calcs/blob/master/spec/calc_spec.rb#L99-L104).
+* Implement the missing tests cases [here](spec/calc_spec.rb#L99-L104).
 * Implement the missing logic in models, which makes tests green. One test is green, which indicate some basic logic is working. Missing logic is:
   * calculate `weighted` and `percentage` metrics
   * apply audience expression to make calculations only over specific sample
