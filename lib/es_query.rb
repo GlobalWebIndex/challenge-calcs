@@ -5,7 +5,7 @@ require 'es'
 
 
 class EsQuery
-  def initialize(question:, audience: {})
+  def initialize(question:, audience:)
     @question = question
     @audience = audience
   end
