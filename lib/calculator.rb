@@ -1,3 +1,4 @@
+require 'es'
 require 'es_query'
 
 class Calculator
@@ -6,7 +7,10 @@ class Calculator
   def initialize(question:, audience: {})
     puts
     puts
-    es_result = EsQuery.new(question: question, audience: audience).execute
+    query = EsQueryMaker.new(question: question, audience: audience).make
+    puts "query %s" % [query[:aggs]]
+    es_result = ES::Client.search(index: ES::INDEX, type: :respondent, body: query)
+
     universe = es_result['aggregations']['weighted_universe']['value']
     puts "universe %s" % [universe]
     buckets = es_result['aggregations']['options']['buckets']

@@ -1,23 +1,15 @@
-require 'es'
-
-class EsQuery
+class EsQueryMaker
   def initialize(question:, audience:)
     @question = question
     @audience = audience
     @hasAudience = audience.is_a?(Hash) && audience.length > 0
   end
 
-  def execute
-    ES::Client.search(index: ES::INDEX, type: :respondent, body: body)
-  end
-
-  def body
+  def make
     request = { size: 0, aggs: {} }
     set_audience(request)
     set_universe(request)
     set_options(request)
-
-    puts "query %s" % [request[:aggs]]
     request
   end
 
