@@ -169,8 +169,8 @@ The challenge has 2 parts:
   * calculate `weighted` and `percentage` metrics
   * apply audience expression to make calculations only over specific sample
 
-To run tests you can use docker compose by executing `docker-compose run challenge`. If you don't want use docker and use `rspec` directly
-please run it with `ELASTIC_URL` env variable set to your local elasticsearch instance.
+To run tests you can use docker compose by executing `docker-compose run challenge`. If you don't want use docker and use `rspec` directly.
+Please run it with `ELASTIC_URL` env variable set to your local elasticsearch instance.
 
 If you are interested in applying for this position or just want to challenge yourself (which is also 100% OK for us) please continue in following steps:
 
