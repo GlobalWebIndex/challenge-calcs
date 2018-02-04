@@ -5,18 +5,19 @@ class Calculator
   attr_reader :result
 
   def initialize(question:, audience: {})
-    puts
-    puts
-    query = EsQueryMaker.new(question: question, audience: audience).make
-    puts "query %s" % [query]
-    es_result = ES::Client.search(index: ES::INDEX, type: :respondent, body: query)
+    #puts
+    #puts
+    request = EsQueryMaker.new(question: question, audience: audience).make
+    #puts "request %s" % [request]
+    response = ES::Client.search(index: ES::INDEX, type: :respondent, body: request)
+    #puts "response %s" % [response]
 
-    universe = es_result['aggregations']['weighted_universe']['value']
-    puts "universe %s" % [universe]
-    buckets = es_result['aggregations']['options']['buckets']
-    puts "buckets %s" % [buckets]
+    universe = response['aggregations']['weighted_universe']['value']
+    #puts "universe %s" % [universe]
+    buckets = response['aggregations']['options']['buckets']
+    #puts "buckets %s" % [buckets]
     @result = buckets.map{|o| calc_option(o, universe)}
-    puts "result %s" % [@result]
+    #puts "result %s" % [@result]
   end
 
   private

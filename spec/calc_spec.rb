@@ -5,6 +5,7 @@ describe 'Calculations' do
   let(:red_likers_audience) { {and: [{colour: [:red]}]} }
   let(:female_or_not_old_audience) { {or: [{gender: [:female]}, {age: [:young, :middle]}]} }
   let(:red_and_blue_audience) { {and: [{colour: [:red]}, {colour: [:blue]}]} }
+  let(:female_or_red_old_audience) { {or: [{ gender: [:female] }, {and: [{ colour: [:red] }, { age: [:old] }]}]}}
 
   let(:respondents) do
     [
@@ -34,19 +35,24 @@ describe 'Calculations' do
     let(:question) { :gender }
 
     it 'has correct responses count for male' do
+      # sanity
       expect(subject.detect{|o| o[:option] == 'male'}[:responses_count]).to eq(3)
     end
 
-    it 'should return correct result' do # male: john, peter, steve | female: rachel, susan, cate
+    it 'should return correct result' do
+      # male: john 1100, peter 1100, steve 1100 = 3300 => 3300 / 6300 = 52.38 %
+      # female: rachel 1000, susan 1000, kate 1000 = 3000 => 3000 / 6300 = 47.62 %
       expect(subject).to match_array([
         { option: 'male', responses_count: 3, weighted: 3300, percentage: 52.38 },
         { option: 'female', responses_count: 3, weighted: 3000, percentage: 47.62 }
       ])
     end
 
-    context "with red likers audience" do # red: john, peter, susan | male: john, peter | female: susan
+    context "with red likers audience" do
       let(:audience) { red_likers_audience }
       it 'should return correct result' do
+        # male: john 1100, peter 1100 = 2200 => 2200 / 3200 = 68.75 %
+        # female: susan 1000 = 1000 = 1000 => 1000 / 3200 = 31.25 %
         expect(subject).to match_array([
           { option: 'male', responses_count: 2, weighted: 2200, percentage: 68.75 },
           { option: 'female', responses_count: 1, weighted: 1000, percentage: 31.25 }
@@ -54,13 +60,11 @@ describe 'Calculations' do
       end
     end
 
-    context "with red and blue likers audience" do # todo
+    context "with red and blue likers audience" do
       let(:audience) { red_and_blue_audience }
       it 'should return correct result' do
-        expect(subject).to match_array([
-          { option: 'male', responses_count: 3, weighted: 3300, percentage: 52.38 }, # 3300 / (3300 + 3000) = 0.5238095238095238
-          { option: 'female', responses_count: 3, weighted: 3000, percentage: 47.62 } # 3000 / (3300 + 3000) = 0.47619047619047616
-        ])
+        # This should be empty, because we do not support liking multiple colors at the same time!
+        expect(subject).to match_array([ ])
       end
     end
 
@@ -69,19 +73,33 @@ describe 'Calculations' do
   context "colour question" do
     let(:question) { :colour }
 
-    # TODO: make test
+    it 'has correct responses count for red' do
+      # sanity
+      expect(subject.detect{|o| o[:option] == 'red'}[:responses_count]).to eq(3)
+    end
 
     context "with female or not old audience" do
       let(:audience) { female_or_not_old_audience }
-
-      # TODO: make test
+      it 'should return correct result' do
+        # blue: steve 11000, rachel 1000, kate 1000 = 3100 => 3100 / 5200 = 59.62 %
+        # red: john 1100, susan 1000 = 2100 => 2100 / 5200 = 40.38 %
+        expect(subject).to match_array([
+          { option: 'blue', responses_count: 3, weighted: 3100, percentage: 59.62 },
+          { option: 'red', responses_count: 2, weighted: 2100, percentage: 40.38 }
+        ])
+      end
     end
 
     context "with female || (red && old) audience" do
-      let(:female_or_red_old_audience) { } # TODO: create an audience
       let(:audience) { female_or_red_old_audience }
-
-      # TODO: make test
+      it 'should return correct result' do
+        # red: peter 1100, susan 1000 = 2100 => 2100 / 4100 = 51.22
+        # blue: rachel 1000, kate 1000 => 2000 => 2000 / 4100 = 48.78
+        expect(subject).to match_array([
+          { option: 'blue', responses_count: 2, weighted: 2000, percentage: 48.78 },
+          { option: 'red', responses_count: 2, weighted: 2100, percentage: 51.22 }
+        ])
+      end
     end
   end
 end
