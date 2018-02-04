@@ -5,9 +5,11 @@ class Calculator
 
   def initialize(question:, audience: {})
     es_result = EsQuery.new(question: question, audience: audience).execute
-
+    puts "eq_result %s" % [es_result]
     universe = get_universe(es_result)
+    puts "universe %s" % [universe]
     @result = parse_result(es_result, universe)
+    puts "result %s" % [result]
   end
 
   private
@@ -23,7 +25,9 @@ class Calculator
   def calc_option(option_result, universe)
     {
       option: option_result['key'],
-      responses_count: option_result['doc_count']
+      responses_count: option_result['doc_count'],
+      weighted: 0,
+      percentage: (weighted / universe) * 100
     }
   end
 end
